@@ -1,8 +1,8 @@
 <?php
     define('DB_HOST', 'localhost');
-    define('DB_USER', 'root');
-    define('DB_PASS', '');
-    define('DB_NAME', 'digitalprinting_db');
+    define('DB_USER', 'dbadmin');
+    define('DB_PASS', 'kamiserver');
+    define('DB_NAME', 'digitalprintingdb');
 
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 

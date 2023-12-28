@@ -123,8 +123,8 @@ include '../app/core/database.php';
         
         global $emptyTag;
         
-        if (isset($_POST['uptags']) && is_array($_POST['uptags'])) {
-            $tag_produk = implode(', ', $_POST['uptags']);
+        if (isset($_POST['upTags']) && is_array($_POST['upTags'])) {
+            $tag_produk = implode(', ', $_POST['upTags']);
         } else {
             // Ambil nilai default dari tabel user
             $queryDefaultTag = "SELECT tag_produk FROM produk WHERE id = $id_produk LIMIT 1";

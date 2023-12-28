@@ -289,7 +289,7 @@ $unreadCount = $rowUnread['unread_count'];
                                     <textarea name="deskripsi_produk" id="" placeholder="Masukkan Deskripsi Produk" class="shadow-sm border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm-light"></textarea>
                                 </div>
                                 <div class="w-full mb-3">
-                                    <input type="text" id="newTags" name="" class="shadow-sm border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm-light" placeholder="Tag Produk">
+                                    <textarea type="text" id="newTags" name="" class="shadow-sm border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm-light" placeholder="Tag Produk"></textarea>
                                     <div id="newTag-container" class="bg-zinc-900 mt-3 h-20 p-3 rounded-lg flex items-center overflow-auto">
                                     </div>
                                     <script>
@@ -334,15 +334,16 @@ $unreadCount = $rowUnread['unread_count'];
                                             });
                                         });
 
-                                        newTagInput.addEventListener('keydown', (event) => {
-                                        if (event.key === 'Enter' || (event.shiftKey && event.key === 'Tab')) {
+                                        newTagInput.addEventListener('keydown', handleKeyDown);
+                                        function handleKeyDown(event) {
+                                            if (event.key === 'Enter' || (event.key === 'Tab')) {
                                                 event.preventDefault();
                                                 const textNew = newTagInput.value.trim();
                                                 if (textNew !== '' && !Array.from(newTagContainer.children).some(child => child.textContent === textNew)) {
                                                     addNewTag(textNew);
                                                 }
                                             }
-                                        });
+                                        }
                                     </script>
                                 </div>
                                 <div class="w-full mb-3">
@@ -448,18 +449,18 @@ $unreadCount = $rowUnread['unread_count'];
                                     <input value="<?= $key['id']; ?>" type="text" id="id" name="id_produk" class="shadow-sm border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm-light" readonly>
                                 </div>
                                 <div class="w-full mb-3">
-                                    <input value="<?= $key['title_produk']; ?>" type="text" id="title_produk" name="title_produk" oninput="updateJudulSlug()" class="shadow-sm border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm-light" placeholder="Nama Produk">
+                                    <input value="<?= $key['title_produk']; ?>" type="text" id="title_produk_<?= $key['id']?>" name="title_produk" oninput="updateJudulSlug<?= $key['id']?>()" class="shadow-sm border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm-light" placeholder="Nama Produk">
                                 </div>
                                 <div class="w-full mb-3">
-                                    <input value="<?= $key['slug_produk']; ?>" type="text" id="slug_produk" name="slug_produk" class="shadow-sm border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white/40 focus:ring-blue-500 focus:border-blue-500 shadow-sm-light" placeholder="Slug Nama Produk" readonly>
+                                    <input value="<?= $key['slug_produk']; ?>" type="text" id="slug_produk_<?= $key['id']?>" name="slug_produk" class="shadow-sm border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white/40 focus:ring-blue-500 focus:border-blue-500 shadow-sm-light" placeholder="Slug Nama Produk" readonly>
                                     <script>
-                                        function updateJudulSlug() {
+                                        function updateJudulSlug<?= $key['id']?>() {
                                             // Mengambil nilai dari Input 1 (Judul Biasa)
-                                            var judulBiasa = document.getElementById('title_produk').value;
+                                            var judulBiasa<?= $key['id']?> = document.getElementById('title_produk_<?= $key['id']?>').value;
 
                                             // Mengganti spasi dengan underscore (_) dan mengisi nilai ke Input 2 (Judul Slug)
-                                            var judulSlug = judulBiasa.replace(/\s+/g, '-');
-                                            document.getElementById('slug_produk').value = judulSlug;
+                                            var judulSlug<?= $key['id']?> = judulBiasa<?= $key['id']?>.replace(/\s+/g, '-');
+                                            document.getElementById('slug_produk_<?= $key["id"]?>').value = judulSlug<?= $key['id']?>;
                                         }
                                     </script>
                                 </div>
@@ -496,60 +497,63 @@ $unreadCount = $rowUnread['unread_count'];
                                     <textarea name="deskripsi_produk" id="" placeholder="Masukkan Deskripsi Produk" class="shadow-sm border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm-light"><?= $key['deskripsi_produk']; ?></textarea>
                                 </div>
                                 <div class="w-full mb-3">
-                                    <input type="text" id="upTags" name="" class="shadow-sm border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm-light" placeholder="Tag Baru">
-                                    <div id="upTag-container" class="bg-zinc-900 mt-3 h-20 p-3 rounded-lg flex items-center overflow-auto">
+                                    <textarea type="text" id="upTags_<?= $key['id'] ?>" name="" class="shadow-sm border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 shadow-sm-light" placeholder="Tag Baru"></textarea>
+                                    <div id="upTag-container_<?= $key['id'] ?>" class="bg-zinc-900 mt-3 h-20 p-3 rounded-lg flex items-center overflow-auto">
                                     </div>
                                     <script>
-                                        const upTagInput = document.getElementById('upTags');
-                                        const upTagContainer = document.getElementById('upTag-container');
+                                        const upTagInput<?= $key['id']; ?> = document.getElementById('upTags_<?= $key["id"]; ?>');
+                                        const upTagContainer<?= $key['id']; ?> = document.getElementById('upTag-container_<?= $key["id"]; ?>');
 
-                                        function createUpdateTag(text) {
-                                            const upTag = document.createElement('span');
-                                            upTag.classList.add('inline-flex', 'items-center', 'whitespace-nowrap', 'py-2', 'px-3', 'm-1', 'bg-white/30', 'text-white', 'rounded-md');
+                                        function createUpdateTag<?= $key['id']; ?>(text) {
+                                            const upTag<?= $key['id']; ?> = document.createElement('span');
+                                            upTag<?= $key['id']; ?>.classList.add('inline-flex', 'items-center', 'whitespace-nowrap', 'py-2', 'px-3', 'm-1', 'bg-white/30', 'text-white', 'rounded-md');
 
-                                            const hiddenUpdateInput = document.createElement('input');
-                                            hiddenUpdateInput.setAttribute('type', 'hidden');
-                                            hiddenUpdateInput.setAttribute('name', 'uptags[]');
-                                            hiddenUpdateInput.setAttribute('value', text);
-                                            upTag.appendChild(hiddenUpdateInput);
+                                            const hiddenUpdateInput<?= $key['id']; ?> = document.createElement('input');
+                                            hiddenUpdateInput<?= $key['id']; ?>.setAttribute('type', 'hidden');
+                                            hiddenUpdateInput<?= $key['id']; ?>.setAttribute('name', 'upTags[]');
+                                            hiddenUpdateInput<?= $key['id']; ?>.setAttribute('value', text);
+                                            upTag<?= $key['id']; ?>.appendChild(hiddenUpdateInput<?= $key['id']; ?>);
 
-                                            const tagUpdateText = document.createElement('span');
-                                            tagUpdateText.textContent = text;
-                                            upTag.appendChild(tagUpdateText);
+                                            const tagUpdateText<?= $key['id']; ?> = document.createElement('span');
+                                            tagUpdateText<?= $key['id']; ?>.textContent = text;
+                                            upTag<?= $key['id']; ?>.appendChild(tagUpdateText<?= $key['id']; ?>);
 
-                                            const deleteUpdateIcon = document.createElement('i');
-                                            deleteUpdateIcon.classList.add('fas', 'fa-times', 'ml-2', 'cursor-pointer', 'bg-white', 'text-zinc-900', 'px-2', 'py-1', 'rounded-md');
-                                            deleteUpdateIcon.addEventListener('click', () => {
-                                                upTagContainer.removeChild(upTag);
+                                            const deleteUpdateIcon<?= $key['id']; ?> = document.createElement('i');
+                                            deleteUpdateIcon<?= $key['id']; ?>.classList.add('fas', 'fa-times', 'ml-2', 'cursor-pointer', 'bg-white', 'text-zinc-900', 'px-2', 'py-1', 'rounded-md');
+                                            deleteUpdateIcon<?= $key['id']; ?>.addEventListener('click', () => {
+                                                upTagContainer<?= $key['id']; ?>.removeChild(upTag<?= $key['id']; ?>);
                                             });
-                                            upTag.appendChild(deleteUpdateIcon);
+                                            upTag<?= $key['id']; ?>.appendChild(deleteUpdateIcon<?= $key['id']; ?>);
 
-                                            return upTag;
+                                            return upTag<?= $key['id']; ?>;
                                         }
 
-                                        function addUpdateTag(text) {
-                                            const upTag = createUpdateTag(text);
-                                            upTagContainer.appendChild(upTag);
-                                            upTagInput.value = '';
+                                        function addUpdateTag<?= $key['id']; ?>(text) {
+                                            const upTag<?= $key['id']; ?> = createUpdateTag<?= $key['id']; ?>(text);
+                                            upTagContainer<?= $key['id']; ?>.appendChild(upTag<?= $key['id']; ?>);
+                                            upTagInput<?= $key['id']; ?>.value = '';
                                         }
 
-                                        const availableUpdateTags = <?php echo json_encode($name_tag); ?>;
+                                        const availableUpdateTags<?= $key['id']; ?> = <?php echo json_encode($name_tag); ?>;
 
                                         $(function() {
-                                            $("#upTags").autocomplete({
-                                                source: availableUpdateTags
+                                            $(upTagInput<?= $key['id']; ?>).autocomplete({
+                                                source: availableUpdateTags<?= $key['id']; ?>
                                             });
                                         });
 
-                                        upTagInput.addEventListener('keydown', (event) => {
-                                        if (event.key === 'Enter' || (event.shiftKey && event.key === 'Tab')) {
-                                            event.preventDefault();
-                                            const text = upTagInput.value.trim();
-                                            if (text !== '' && !Array.from(upTagContainer.children).some(child => child.textContent === text)) {
-                                            addUpdateTag(text);
+                                        upTagInput<?= $key['id']; ?>.addEventListener('keydown', handleKeyPress);
+                                        upTagInput<?= $key['id']; ?>.addEventListener('keypress', handleKeyPress);
+
+                                        function handleKeyPress(event) {
+                                            if (event.key === 'Enter' || event.key === 'Tab') {
+                                                event.preventDefault();
+                                                const text = upTagInput<?= $key['id']; ?>.value.trim();
+                                                if (text !== '' && !Array.from(upTagContainer<?= $key['id']; ?>.children).some(child => child.textContent === text)) {
+                                                    addUpdateTag<?= $key['id']; ?>(text);
+                                                }
                                             }
                                         }
-                                        });
                                     </script>
                                 </div>
                                 <div class="w-full mb-3">
