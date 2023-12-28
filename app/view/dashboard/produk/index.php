@@ -458,9 +458,11 @@ $unreadCount = $rowUnread['unread_count'];
                                             // Mengambil nilai dari Input 1 (Judul Biasa)
                                             var judulBiasa<?= $key['id']?> = document.getElementById('title_produk_<?= $key['id']?>').value;
 
+                                            var judulLowerCase<?= $key['id']?> = judulBiasa<?= $key['id']?>.toLowerCase();
+
                                             // Mengganti spasi dengan underscore (_) dan mengisi nilai ke Input 2 (Judul Slug)
-                                            var judulSlug<?= $key['id']?> = judulBiasa<?= $key['id']?>.replace(/\s+/g, '-');
-                                            document.getElementById('slug_produk_<?= $key["id"]?>').value = judulSlug<?= $key['id']?>;
+                                            var judulSlug<?= $key['id']?> = judulLowerCase<?= $key['id']?>.replace(/\s+/g, '-');
+                                            document.getElementById('slug_produk_<?= $key['id']?>').value = judulSlug<?= $key['id']?>;
                                         }
                                     </script>
                                 </div>
