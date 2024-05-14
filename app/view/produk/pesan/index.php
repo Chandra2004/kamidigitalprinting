@@ -20,7 +20,8 @@ if ($result->num_rows > 0) {
     $tag_produk = $row['tag_produk'];
     // ...
 } else {
-    header("Location: https://www.kamidigitalprinting.com");
+    // header("Location: https://www.kamidigitalprinting.com");
+    header("Location: http://localhost/KAMI%20FOR%20SERVER/IMPORTANT/public/");
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -207,9 +208,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <span class="text-xs font-semibold px-2.5 py-0.5 rounded bg-blue-200 text-blue-800 ms-3"><?= $kota_produk ?></span>
                             </div>
                         </div>
-                        <div class="bg-gray-700 mb-2 text-white w-full p-2 rounded-md">
+                        <div class="bg-gray-700 mb-2 text-white w-full p-2 rounded-md h-96 overflow-auto">
                             <span class="font-bold">Deskripsi Produk :</span><br>
-                            <?= $deskripsi_produk ?>
+                            <div>
+                                <?= $deskripsi_produk ?>
+                            </div>
                         </div>
                         <div class="bg-gray-700 text-white w-full p-2 rounded-md">
                             <span class="font-bold">Tag Produk :</span><br>
